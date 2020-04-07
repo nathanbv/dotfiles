@@ -1,10 +1,10 @@
 alias zshconfig="vi ~/.zshrc; exec zsh"
-alias zshalias="vi ~/.oh-my-zsh/custom/alias.rc; exec zsh"
+alias zshalias="vi ~/.oh-my-zsh/custom/aliases.zsh; exec zsh"
 
 # Use oh-my-zsh plugin colorize:
 alias cat='ccat'
 alias less='cless'
 
-# xtends oh-my-zsh aliases:
+# Extend oh-my-zsh aliases from ~.oh-my-zsh/lib/directories.zsh:
 alias -g .......="../../../../../.."
 alias -g ........="../../../../../../.."

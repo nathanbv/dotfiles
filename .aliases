@@ -16,6 +16,7 @@ alias settings='env XDG_CURRENT_DESKTOP=GNOME gnome-control-center'
 alias cp='cp -i'
 alias ln='ln -i'
 alias mv='mv -i'
+alias rm='rm -i'
 
 # Use human readable values
 alias df='df -h'

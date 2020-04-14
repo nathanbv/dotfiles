@@ -12,15 +12,15 @@ files() { xdg-open ./"$1" }
 # https://www.reddit.com/r/Fedora/comments/7dcc0o/fix_for_blank_gnome_control_center_settings_with/
 alias settings='env XDG_CURRENT_DESKTOP=GNOME gnome-control-center'
 
-# Enable interactive mode to always ask confirmation
-alias cp='cp -i'
-alias ln='ln -i'
-alias mv='mv -i'
-alias rm='rm -i'
+# Enable interactive mode to always ask confirmation to overwrite (-i option)
+alias cp='cp --interactive'
+alias ln='ln --interactive'
+alias mv='mv --interactive'
+alias rm='rm --interactive=once'
 
-# Use human readable values
-alias df='df -h'
-alias du='du -h'
+# Use human readable values (-h option)
+alias df='df --human-readable'
+alias du='du --human-readable'
 
 dir() { mkdir "$1" && cd "$1" }
 

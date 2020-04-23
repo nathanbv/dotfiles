@@ -20,24 +20,47 @@ get_git_branch() {
     echo -n "%{$GREEN_BOLD%}$(git_current_branch)"
 }
 
-get_git_staged() {
+get_git_ready() {
     # Format for git_prompt_status()
-    ZSH_THEME_GIT_PROMPT_ADDED="%{$GREEN%}●"
-    echo -n "$(git_prompt_status)"
+    ZSH_THEME_GIT_PROMPT_ADDED="A"
+    ZSH_THEME_GIT_PROMPT_STASHED="S"
+    if [[ -n $(git_prompt_status) ]]; then
+        echo -n "%{$GREEN%}●"
+    fi
     ZSH_THEME_GIT_PROMPT_ADDED=""
+    ZSH_THEME_GIT_PROMPT_STASHED=""
 }
 
-get_git_dirty() {
-    # Format for parse_git_dirty()
-    ZSH_THEME_GIT_PROMPT_DIRTY="%{$YELLOW%}●"
-    echo -n "$(parse_git_dirty)"
-}
-
-get_git_untracked() {
+get_git_waiting() {
     # Format for git_prompt_status()
-    ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$RED%}●"
-    echo -n "$(git_prompt_status)"
+    ZSH_THEME_GIT_PROMPT_MODIFIED="M"
+    ZSH_THEME_GIT_PROMPT_RENAMED="R"
+    ZSH_THEME_GIT_PROMPT_DELETED="D"
+    ZSH_THEME_GIT_PROMPT_UNMERGED="U"
+    if [[ -n $(git_prompt_status) ]]; then
+        echo -n "%{$YELLOW%}●"
+    fi
+    ZSH_THEME_GIT_PROMPT_MODIFIED=""
+    ZSH_THEME_GIT_PROMPT_RENAMED=""
+    ZSH_THEME_GIT_PROMPT_DELETED=""
+    ZSH_THEME_GIT_PROMPT_UNMERGED=""
+}
+
+get_git_ugly() {
+    # Format for git_prompt_status()
+    ZSH_THEME_GIT_PROMPT_UNTRACKED="UT"
+    ZSH_THEME_GIT_PROMPT_UNMERGED="UM"
+    ZSH_THEME_GIT_PROMPT_AHEAD="A"
+    ZSH_THEME_GIT_PROMPT_BEHIND="B"
+    ZSH_THEME_GIT_PROMPT_DIVERGED="D"
+    if [[ -n $(git_prompt_status) ]]; then
+        echo -n "%{$RED%}●"
+    fi
     ZSH_THEME_GIT_PROMPT_UNTRACKED=""
+    ZSH_THEME_GIT_PROMPT_UNMERGED=""
+    ZSH_THEME_GIT_PROMPT_AHEAD=""
+    ZSH_THEME_GIT_PROMPT_BEHIND=""
+    ZSH_THEME_GIT_PROMPT_DIVERGED=""
 }
 
 get_git_info() {
@@ -45,9 +68,9 @@ get_git_info() {
     if [[ -n "$(git rev-parse --is-inside-work-tree 2> /dev/null)" ]]; then
         echo -n "${GIT_INFO_PREFIX}"
         get_git_branch
-        get_git_staged
-        get_git_dirty
-        get_git_untracked
+        get_git_ready
+        get_git_waiting
+        get_git_ugly
         echo -n "${GIT_INFO_SUFFIX}"
     fi
 }

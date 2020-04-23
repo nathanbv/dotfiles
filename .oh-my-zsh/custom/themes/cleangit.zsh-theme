@@ -87,7 +87,7 @@ PROMPT='${START_PROMPT}$(get_git_info)${END_PROMPT}'
 
 # Returns a flag if the last command returned a non-zero exit code
 function get_error() {
-    RET_VAL=$?
+    local -r RET_VAL=$?
     [[ $RET_VAL -ne 0 ]] && command echo -n " ♻"
 }
 

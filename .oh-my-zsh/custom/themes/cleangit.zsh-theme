@@ -24,9 +24,7 @@ get_git_ready() {
     # Format for git_prompt_status()
     ZSH_THEME_GIT_PROMPT_ADDED="A"
     ZSH_THEME_GIT_PROMPT_STASHED="S"
-    if [[ -n $(git_prompt_status) ]]; then
-        echo -n "%{$GREEN%}●"
-    fi
+    [[ -n $(git_prompt_status) ]] && echo -n "%{$GREEN%}●"
     ZSH_THEME_GIT_PROMPT_ADDED=""
     ZSH_THEME_GIT_PROMPT_STASHED=""
 }
@@ -37,9 +35,7 @@ get_git_waiting() {
     ZSH_THEME_GIT_PROMPT_RENAMED="R"
     ZSH_THEME_GIT_PROMPT_DELETED="D"
     ZSH_THEME_GIT_PROMPT_UNMERGED="U"
-    if [[ -n $(git_prompt_status) ]]; then
-        echo -n "%{$YELLOW%}●"
-    fi
+    [[ -n $(git_prompt_status) ]] && echo -n "%{$YELLOW%}●"
     ZSH_THEME_GIT_PROMPT_MODIFIED=""
     ZSH_THEME_GIT_PROMPT_RENAMED=""
     ZSH_THEME_GIT_PROMPT_DELETED=""
@@ -53,9 +49,7 @@ get_git_ugly() {
     ZSH_THEME_GIT_PROMPT_AHEAD="A"
     ZSH_THEME_GIT_PROMPT_BEHIND="B"
     ZSH_THEME_GIT_PROMPT_DIVERGED="D"
-    if [[ -n $(git_prompt_status) ]]; then
-        echo -n "%{$RED%}●"
-    fi
+    [[ -n $(git_prompt_status) ]] && echo -n "%{$RED%}●"
     ZSH_THEME_GIT_PROMPT_UNTRACKED=""
     ZSH_THEME_GIT_PROMPT_UNMERGED=""
     ZSH_THEME_GIT_PROMPT_AHEAD=""
@@ -64,15 +58,17 @@ get_git_ugly() {
 }
 
 get_git_info() {
-    # Verify if the current directory is inside a git repository
-    if [[ -n "$(git rev-parse --is-inside-work-tree 2> /dev/null)" ]]; then
-        echo -n "${GIT_INFO_PREFIX}"
-        get_git_branch
-        get_git_ready
-        get_git_waiting
-        get_git_ugly
-        echo -n "${GIT_INFO_SUFFIX}"
-    fi
+    # Return if the current directory is not inside a git repository
+    local is_git_repo
+    is_git_repo=$(command git symbolic-ref HEAD 2> /dev/null) || \
+    is_git_repo=$(command git rev-parse --short HEAD 2> /dev/null) || return 0
+
+    echo -n "${GIT_INFO_PREFIX}"
+    get_git_branch
+    get_git_ready
+    get_git_waiting
+    get_git_ugly
+    echo -n "${GIT_INFO_SUFFIX}"
 }
 
 START_PROMPT="%{$BLUE_BOLD%}%C"
@@ -92,7 +88,7 @@ PROMPT='${START_PROMPT}${SEPARATOR}$(get_git_info)${END_PROMPT}'
 # Status:
 # - are there background jobs?
 prompt_status() {
-  [[ $(jobs -l | wc -l) -gt 0 ]] && echo -n " ⚙"
+    [[ $(jobs -l | wc -l) -gt 0 ]] && echo -n "⚙"
 }
 
-RPROMPT='%{$GREY_BOLD%}$(prompt_status)%{$RESET_COLOR%}'
+RPROMPT='%{$GREY_BOLD%} $(prompt_status)%{$RESET_COLOR%}'

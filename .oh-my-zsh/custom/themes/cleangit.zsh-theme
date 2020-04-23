@@ -1,4 +1,4 @@
-# Color shortcuts
+# Color definition
 RED=$fg[red]
 YELLOW=$fg[yellow]
 GREEN=$fg[green]
@@ -15,73 +15,75 @@ CYAN_BOLD=$fg_bold[cyan]
 GREY_BOLD=$fg_bold[grey]
 RESET_COLOR=$reset_color
 
-# Git functions
-get_git_branch() {
-    echo -n "%{$GREEN_BOLD%}$(git_current_branch)"
+# Returns the name of the current branch
+function get_git_branch() {
+    command echo -n "%{$GREEN_BOLD%}$(git_current_branch)"
 }
 
-get_git_ready() {
-    # Format for git_prompt_status()
-    ZSH_THEME_GIT_PROMPT_ADDED="A"
-    ZSH_THEME_GIT_PROMPT_STASHED="S"
-    [[ -n $(git_prompt_status) ]] && echo -n "%{$GREEN%}●"
-    ZSH_THEME_GIT_PROMPT_ADDED=""
-    ZSH_THEME_GIT_PROMPT_STASHED=""
+# Returns a green flag if index and work tree matches (staged changes), or if
+# there is stashed changes
+function get_git_good() {
+    local READY
+    if $(command git status --porcelain 2> /dev/null | command grep '^[ACDMRT]. ' &> /dev/null); then
+        READY=1 # Staged
+    elif $(command git rev-parse --verify refs/stash >/dev/null 2>&1); then
+        READY=1 # Stashed
+    fi
+    [[ $READY ]] && command echo -n "%{$GREEN%}●"
 }
 
-get_git_waiting() {
-    # Format for git_prompt_status()
-    ZSH_THEME_GIT_PROMPT_MODIFIED="M"
-    ZSH_THEME_GIT_PROMPT_RENAMED="R"
-    ZSH_THEME_GIT_PROMPT_DELETED="D"
-    [[ -n $(git_prompt_status) ]] && echo -n "%{$YELLOW%}●"
-    ZSH_THEME_GIT_PROMPT_MODIFIED=""
-    ZSH_THEME_GIT_PROMPT_RENAMED=""
-    ZSH_THEME_GIT_PROMPT_DELETED=""
+# Returns a yellow flag if work tree was changed (unstaged changes)
+function get_git_bad() {
+    if $(command git status --porcelain 2> /dev/null | command grep '^.[ACDMRT] ' &> /dev/null); then
+        command echo -n "%{$YELLOW%}●"
+    fi
 }
 
-get_git_ugly() {
-    # Format for git_prompt_status()
-    ZSH_THEME_GIT_PROMPT_UNTRACKED="UT"
-    ZSH_THEME_GIT_PROMPT_UNMERGED="UM"
-    ZSH_THEME_GIT_PROMPT_AHEAD="A"
-    ZSH_THEME_GIT_PROMPT_BEHIND="B"
-    ZSH_THEME_GIT_PROMPT_DIVERGED="D"
-    [[ -n $(git_prompt_status) ]] && echo -n "%{$RED%}●"
-    ZSH_THEME_GIT_PROMPT_UNTRACKED=""
-    ZSH_THEME_GIT_PROMPT_UNMERGED=""
-    ZSH_THEME_GIT_PROMPT_AHEAD=""
-    ZSH_THEME_GIT_PROMPT_BEHIND=""
-    ZSH_THEME_GIT_PROMPT_DIVERGED=""
+# Returns a red flag if there is untracked or unmerged changes
+function get_git_ugly() {
+    if $(command git status --porcelain 2> /dev/null | command grep -E '^([\?U].|.[\?U]) ' &> /dev/null); then
+        command echo -n "%{$RED%}●"
+    fi
 }
 
-get_git_info() {
+# If the current directory is inside a git tree returns a formatted string with
+# the branch name and the flags
+function get_git_info() {
     # Return if the current directory is not inside a git repository
-    local is_git_repo
-    is_git_repo=$(command git symbolic-ref HEAD 2> /dev/null) || \
-    is_git_repo=$(command git rev-parse --short HEAD 2> /dev/null) || return 0
+    local IS_GIT
+    if $(command git symbolic-ref HEAD &> /dev/null); then
+        IS_GIT=1
+    elif $(command git rev-parse --short HEAD &> /dev/null); then
+        IS_GIT=1
+    fi
+    [[ ! $IS_GIT ]] && return
 
-    echo -n "${GIT_INFO_PREFIX}"
+    command echo -n "${GIT_INFO_PREFIX}"
     get_git_branch
-    get_git_ready
-    get_git_waiting
+    get_git_good
+    get_git_bad
     get_git_ugly
-    echo -n "${GIT_INFO_SUFFIX}"
+    command echo -n "${GIT_INFO_SUFFIX}"
 }
 
 START_PROMPT="%{$BLUE_BOLD%}%C"
 END_PROMPT="%{$RESET_COLOR%} "
 
+
+## You can choose between two flavours of prompt:
+
 ##carplay|master●●● foo # In a git repo
-##Downloads| foo # Otherwise
-#SEPARATOR="%{$RED_BOLD%}|"
+##Downloads foo # Otherwise
+#GIT_INFO_PREFIX="%{$RED_BOLD%}|"
+#GIT_INFO_SUFFIX=""
 
 #carplay[master●●●] foo # In a git repo
 #Downloads foo # Otherwise
 GIT_INFO_PREFIX="%{$GREEN_BOLD%}["
 GIT_INFO_SUFFIX="%{$GREEN_BOLD%}]"
 
-PROMPT='${START_PROMPT}${SEPARATOR}$(get_git_info)${END_PROMPT}'
+# Create the PS1 prompt
+PROMPT='${START_PROMPT}$(get_git_info)${END_PROMPT}'
 
 # Status:
 # - are there background jobs?

@@ -34,12 +34,10 @@ get_git_waiting() {
     ZSH_THEME_GIT_PROMPT_MODIFIED="M"
     ZSH_THEME_GIT_PROMPT_RENAMED="R"
     ZSH_THEME_GIT_PROMPT_DELETED="D"
-    ZSH_THEME_GIT_PROMPT_UNMERGED="U"
     [[ -n $(git_prompt_status) ]] && echo -n "%{$YELLOW%}●"
     ZSH_THEME_GIT_PROMPT_MODIFIED=""
     ZSH_THEME_GIT_PROMPT_RENAMED=""
     ZSH_THEME_GIT_PROMPT_DELETED=""
-    ZSH_THEME_GIT_PROMPT_UNMERGED=""
 }
 
 get_git_ugly() {

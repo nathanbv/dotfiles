@@ -85,10 +85,16 @@ GIT_INFO_SUFFIX="%{$GREEN_BOLD%}]"
 # Create the PS1 prompt
 PROMPT='${START_PROMPT}$(get_git_info)${END_PROMPT}'
 
-# Status:
-# - are there background jobs?
-prompt_status() {
-    [[ $(jobs -l | wc -l) -gt 0 ]] && echo -n "⚙"
+# Returns a flag if the last command returned a non-zero exit code
+function get_error() {
+    RET_VAL=$?
+    [[ $RET_VAL -ne 0 ]] && command echo -n " ♻"
 }
 
-RPROMPT='%{$GREY_BOLD%} $(prompt_status)%{$RESET_COLOR%}'
+# Returns a flag if there is backgroung jobs running
+function get_bg_jobs() {
+    [[ $(jobs -l | command wc -l) -gt 0 ]] && command echo -n " ⚙"
+}
+
+# Create the PS1 prompt on the right
+RPROMPT='%{$GREY%}$(get_error)$(get_bg_jobs)%{$RESET_COLOR%}'

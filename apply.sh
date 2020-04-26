@@ -1,4 +1,4 @@
-ln -s ~/.dotfiles/.aliases ~/.aliases
-ln -s ~/.dotfiles/.zshrc ~/.zshrc
-ln -s ~/.dotfiles/.i3 ~/.i3
-ln -s ~/.dotfiles/.oh-my-zsh/custom ~/.oh-my-zsh/custom # ~/.oh-my-zsh/custom might need to be removed first
+ln -fs $(pwd)/.aliases $HOME
+ln -fs $(pwd)/.zshrc $HOME
+ln -fs $(pwd)/.i3 $HOME
+rm -rf $HOME/.oh-my-zsh/custom/ ; ln -fs $(pwd)/.oh-my-zsh/custom/ $HOME/.oh-my-zsh/

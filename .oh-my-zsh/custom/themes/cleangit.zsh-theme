@@ -63,7 +63,7 @@ function get_git_info() {
 
 
 #######################################
-# MAIN PROMPT
+# MAIN PROMPT (PS1)
 #######################################
 
 ## You can choose between two flavours of prompt:
@@ -79,15 +79,15 @@ ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg_bold[green]%}["
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$fg_bold[green]%}]"
 
 
-ZSH_THEME_PROMPT_PREFIX="%{$fg_bold[blue]%}%C"
-ZSH_THEME_PROMPT_SUFFIX="%{$reset_color%} "
+ZSH_THEME_PROMPT_PREFIX="%{$fg_bold[blue]%}"
+ZSH_THEME_PROMPT_SUFFIX="%{$reset_color%}"
 
 # Create the PS1 prompt
-PROMPT='${ZSH_THEME_PROMPT_PREFIX}$(get_git_info)${ZSH_THEME_PROMPT_SUFFIX}'
+PROMPT='${ZSH_THEME_PROMPT_PREFIX}%C$(get_git_info)${ZSH_THEME_PROMPT_SUFFIX} '
 
 
 #######################################
-# RIGHT PROMPT
+# RIGHT PROMPT (PS1 right aligned)
 #######################################
 
 # Returns a flag if the last command returned a non-zero exit code
@@ -102,4 +102,10 @@ function get_bg_jobs() {
 }
 
 # Create the PS1 prompt on the right
-RPROMPT='%{$fg[grey]%}$(get_error)$(get_bg_jobs)%{$reset_color%}'
+RPROMPT='%{$fg[grey]%}$(get_error)$(get_bg_jobs)${ZSH_THEME_PROMPT_SUFFIX}'
+
+
+#######################################
+# PROMPT2 (PS2, something's unfinished)
+#######################################
+PROMPT2='%{$fg_bold[green]%}%_${ZSH_THEME_PROMPT_PREFIX}>${ZSH_THEME_PROMPT_SUFFIX} '

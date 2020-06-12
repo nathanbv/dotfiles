@@ -1,3 +1,12 @@
+# Platform dependant commands (TODO)
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+  # Nothing yet
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+  # Nothing yet
+else
+  # Something else...
+fi
+
 # Avoid rebooting the host when trying to reboot the target
 alias reboot='echo "\"reboot\" command disabled on the Linux desktop"'
 
@@ -19,7 +28,8 @@ alias mv='mv --interactive'
 alias rm='rm --interactive=once'
 
 # Use human readable values (-h option)
-alias df='df --human-readable'
+# Do not show snap partitions on Ubuntu
+alias df='df --human-readable --exclude-type="squashfs"'
 alias du='du --human-readable'
 
 dir() { mkdir "$1" && cd "$1" }
@@ -106,16 +116,16 @@ adb-init()
 #adb-sync 172.20.1.163 nis8200
 adb-sync()
 {
-    adb-update $1 $2 sync
+  adb-update $1 $2 sync
 }
 
 #adb-update 172.20.1.163 nis8200 sync/init
 adb-update()
 {
-    adb-disconnect ; \
-    adb-connect "$1" && \
-    adb -s "$addr_android" root && \
-    adb -s "$addr_android" shell mount -o rw,remount /vendor/pulsar && \
-    ./products/pulsar_base/scripts/sync.sh -s "$addr_pulsar" "$2" "$3" && \
-    adb-disconnect
+  adb-disconnect ; \
+  adb-connect "$1" && \
+  adb -s "$addr_android" root && \
+  adb -s "$addr_android" shell mount -o rw,remount /vendor/pulsar && \
+  ./products/pulsar_base/scripts/sync.sh -s "$addr_pulsar" "$2" "$3" && \
+  adb-disconnect
 }

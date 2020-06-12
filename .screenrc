@@ -1,0 +1,19 @@
+# See https://www.gnu.org/software/screen/manual/html_node/index.html
+
+# Allow the buffer to be printed on the actual terminal so the scrollback in
+# the line history is done in the terminal output.
+termcapinfo xterm* ti@:te@
+
+# No annoying startup message
+startup_message off
+
+# Display the status line at the bottom
+hardstatus on
+hardstatus alwayslastline
+# Display the keybinding to exit screen and the name of the window
+hardstatus string 'Ctrl-a k | %h%=[%t]'
+
+# Keep the screen open and poll every 5s for the interface to be up again.
+# Use 'k' to kill the screen, use 'r' to try to resurrect it.
+zombie kr
+zombie_timeout 5

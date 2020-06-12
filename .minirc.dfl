@@ -1,0 +1,10 @@
+# See https://salsa.debian.org/minicom-team/minicom/-/blob/master/src/rwconf.c
+
+pu port             /dev/ttyUSB0
+pu baudrate         115200
+pu bits             8
+pu parity           N
+pu stopbits         1
+pu rtscts           No
+pu linewrap         Yes
+pu histlines        5000

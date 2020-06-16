@@ -4,7 +4,7 @@
 
 # Returns the name of the current branch
 function get_git_branch() {
-    command echo -n "%{$fg[green]%}$(git_current_branch)"
+    command echo -n "%{$fg_bold[green]%}$(git_current_branch)"
 }
 
 # Stores the index to be parsed
@@ -68,18 +68,18 @@ function get_git_info() {
 
 ## You can choose between two flavours of prompt:
 
-##.dotfiles|master●●● foo # In a git repo
+##carplay|master●●● foo # In a git repo
 ##Downloads foo # Otherwise
-#ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[red]%}|"
+#ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg_bold[red]%}|"
 #ZSH_THEME_GIT_PROMPT_SUFFIX=""
 
-#.dotfiles[master●●●] foo # In a git repo
+#carplay[master●●●] foo # In a git repo
 #Downloads foo # Otherwise
-ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[green]%}["
-ZSH_THEME_GIT_PROMPT_SUFFIX="%{$fg[green]%}]"
+ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg_bold[green]%}["
+ZSH_THEME_GIT_PROMPT_SUFFIX="%{$fg_bold[green]%}]"
 
 
-ZSH_THEME_PROMPT_PREFIX="%{$fg[blue]%}"
+ZSH_THEME_PROMPT_PREFIX="%{$fg_bold[blue]%}"
 ZSH_THEME_PROMPT_SUFFIX="%{$reset_color%}"
 
 # Create the PS1 prompt
@@ -108,4 +108,4 @@ RPROMPT='%{$fg[grey]%}$(get_error)$(get_bg_jobs)${ZSH_THEME_PROMPT_SUFFIX}'
 #######################################
 # PROMPT2 (PS2, something's unfinished)
 #######################################
-PROMPT2='%{$fg[green]%}%_${ZSH_THEME_PROMPT_PREFIX}>${ZSH_THEME_PROMPT_SUFFIX} '
+PROMPT2='%{$fg_bold[green]%}%_${ZSH_THEME_PROMPT_PREFIX}>${ZSH_THEME_PROMPT_SUFFIX} '

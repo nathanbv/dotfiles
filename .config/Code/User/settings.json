@@ -1,0 +1,102 @@
+{
+    "workbench.statusBar.feedback.visible": false,
+    "workbench.activityBar.visible": true, // Explorer, Search, Git, Debug, Extension pane
+    "workbench.sideBar.location": "right",
+    "workbench.startupEditor": "newUntitledFile",
+    "editor.rulers": [80,120],
+    "workbench.colorCustomizations": {
+        "editorRuler.foreground": "#353d4994"
+    },
+    "editor.renderWhitespace": "boundary",
+    "todohighlight.isEnable": true,
+    "todohighlight.isCaseSensitive": true,
+    "todohighlight.keywordsPattern": "@TODO|@FIXME|@DEBUG|@TEST",
+    "todohighlight.defaultStyle": {
+        "color": "#3f0096",
+        "backgroundColor": "#ff7715",
+        "overviewRulerColor": "#ff7715",
+        "cursor": "pointer",
+        "border": "1px solid #eee",
+        "borderRadius": "2px",
+        "isWholeLine": false,
+    },
+    "todohighlight.include": [
+        "**/*.c",
+        "**/*.cpp",
+        "**/*.h",
+        "**/*.hpp",
+        "**/*.mk",
+    ],
+    "todohighlight.maxFilesForSearch": 5120,
+    "todohighlight.toggleURI": false,
+    "search.showLineNumbers": true,
+    "java.errors.incompleteClasspath.severity": "ignore",
+    "files.exclude": {
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true
+    },
+    "extensions.ignoreRecommendations": false,
+    "logFileHighlighter.customPatterns": [
+        // ulogcat
+        {
+            // 09-16 15:56:28.400 I TEST_LOG    (carplay-5529)                   : >>>NBV This is a custom log
+            // I TEST_LOG    : >>>NBV This is a custom log
+            "pattern": "^([A-Z] )?([0-9 :.-]+)?(.)(\\s+[^(]+)(\\(.+\\)\\s*)?(:.*NBV.*)$",
+            "foreground": "#209920"
+        },
+        {
+            // 09-16 15:56:28.400 E TEST_LOG    (carplay-5529)                   : This is an error
+            // E TEST_LOG    : This is an error
+            "pattern": "^([A-Z] )?([0-9 :.-]+)?(E)(\\s+[^(]+)(\\(.+\\)\\s*)?(:.*)$",
+            "foreground": "#df1f1f"
+        },
+        {
+            // 09-16 15:56:28.400 W TEST_LOG    (carplay-5529)                   : This is a warning
+            // W TEST_LOG    : This is a warning
+            "pattern": "^([A-Z] )?([0-9 :.-]+)?(W)(\\s+[^(]+)(\\(.+\\)\\s*)?(:.*)$",
+            "foreground": "#ffcc1f"
+        },
+        {
+            // 09-16 15:56:28.400 N TEST_LOG    (carplay-5529)                   : This is a notice
+            // N TEST_LOG    : This is a notice
+            "pattern": "^([A-Z] )?([0-9 :.-]+)?(N)(\\s+[^(]+)(\\(.+\\)\\s*)?(:.*)$",
+            "foreground": "#aa44ff"
+        },
+        // logcat
+        {
+            "pattern": "^./.+\\(\\s*\\d+\\): .*NBV.*$",
+            "foreground": "#209920"
+        },
+        {
+            "pattern": "^E/.+\\(\\s*\\d+\\): .+$",
+            "foreground": "#df1f1f"
+        },
+        {
+            "pattern": "^W/.+\\(\\s*\\d+\\): .+$",
+            "foreground": "#ffcc1f"
+        },
+    ],
+    "breadcrumbs.enabled": true,
+    "editor.renderControlCharacters": false,
+    "C_Cpp.default.cppStandard": "c++11",
+    "C_Cpp.default.cStandard": "c11",
+    "C_Cpp.default.intelliSenseMode": "gcc-x64",
+    "gitlens.hovers.currentLine.over": "line",
+    "gitlens.currentLine.scrollable": false,
+    "gitlens.codeLens.enabled": false,
+    "gitlens.statusBar.enabled": false,
+    "gitlens.hovers.enabled": false,
+    "gitlens.views.repositories.location": "gitlens",
+    "gitlens.views.fileHistory.location": "gitlens",
+    "gitlens.views.lineHistory.location": "gitlens",
+    "gitlens.views.compare.location": "gitlens",
+    "gitlens.views.search.location": "gitlens",
+    "diffEditor.ignoreTrimWhitespace": false,
+    "git.suggestSmartCommit": false,
+    "git.autoRepositoryDetection": "openEditors",
+    "git.inputValidationSubjectLength": null,
+    "sync.removeExtensions": false,
+    "sync.gist": "cb7a5a1442c87d9687a87a181c70b196",
+}

@@ -5,3 +5,7 @@ ln -fs $(pwd)/.minirc.dfl $HOME
 ln -fs $(pwd)/.screenrc $HOME
 ln -fs $(pwd)/.config/terminator/config $HOME/.config/terminator/
 ln -fs $(pwd)/.i3 $HOME
+
+# VSCode settings and extensions can also be retrieved from extension Settings Sync
+ln -fs $(pwd)/.config/Code/User/keybindings.json $HOME/.config/Code/User/
+ln -fs $(pwd)/.config/Code/User/settings.json $HOME/.config/Code/User/

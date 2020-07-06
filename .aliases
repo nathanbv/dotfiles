@@ -10,6 +10,8 @@ fi
 # Avoid rebooting the host when trying to reboot the target
 alias reboot='echo "\"reboot\" command disabled on the Linux desktop"'
 
+alias dc='cd'
+
 alias grep='grep --color=auto'
 alias diff='colordiff'
 alias py='python'

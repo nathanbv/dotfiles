@@ -37,45 +37,46 @@
         "**/.settings": true,
         "**/.factorypath": true
     },
+    "files.associations": {
+        "*.*log*": "log",
+        "Dockerfile*": "dockerfile",
+    },
+    "files.defaultLanguage": "log",
     "extensions.ignoreRecommendations": false,
     "logFileHighlighter.customPatterns": [
-        // ulogcat
+        // ulogcat and logcat
         {
-            // 09-16 15:56:28.400 I TEST_LOG    (carplay-5529)                   : >>>NBV This is a custom log
-            // I TEST_LOG    : >>>NBV This is a custom log
-            "pattern": "^([A-Z] )?([0-9 :.-]+)?(.)(\\s+[^(]+)(\\(.+\\)\\s*)?(:.*NBV.*)$",
-            "foreground": "#209920"
-        },
-        {
-            // 09-16 15:56:28.400 E TEST_LOG    (carplay-5529)                   : This is an error
-            // E TEST_LOG    : This is an error
-            "pattern": "^([A-Z] )?([0-9 :.-]+)?(E)(\\s+[^(]+)(\\(.+\\)\\s*)?(:.*)$",
-            "foreground": "#df1f1f"
-        },
-        {
-            // 09-16 15:56:28.400 W TEST_LOG    (carplay-5529)                   : This is a warning
-            // W TEST_LOG    : This is a warning
-            "pattern": "^([A-Z] )?([0-9 :.-]+)?(W)(\\s+[^(]+)(\\(.+\\)\\s*)?(:.*)$",
-            "foreground": "#ffcc1f"
-        },
-        {
-            // 09-16 15:56:28.400 N TEST_LOG    (carplay-5529)                   : This is a notice
-            // N TEST_LOG    : This is a notice
-            "pattern": "^([A-Z] )?([0-9 :.-]+)?(N)(\\s+[^(]+)(\\(.+\\)\\s*)?(:.*)$",
+            // 09-16 15:56:28.400 I TEST_LOG    (carplay-5529)                   : >>>NBV This is an ulogcat custom log
+            // I TEST_LOG    : >>>NBV This is an ulogcat custom log
+            "pattern": "^.*NBV.*$",
             "foreground": "#aa44ff"
         },
-        // logcat
         {
-            "pattern": "^./.+\\(\\s*\\d+\\): .*NBV.*$",
-            "foreground": "#209920"
-        },
-        {
-            "pattern": "^E/.+\\(\\s*\\d+\\): .+$",
+            // 09-16 15:56:28.400 E TEST_LOG    (carplay-5529)                   : This is an ulogcat error
+            // E TEST_LOG    : This is an ulogcat error
+            "pattern": "((^[ECF] )|(^.* [ECF] )).*: .*$",
             "foreground": "#df1f1f"
         },
         {
-            "pattern": "^W/.+\\(\\s*\\d+\\): .+$",
+            // 07-24 13:39:48.358  4559  4559 W PM_DisplayApplication: This is a logcat warning
+            // 09-16 15:56:28.400 W TEST_LOG    (carplay-5529)                   : This is an ulogcat warning
+            // W TEST_LOG    : This is an ulogcat warning
+            "pattern": "((^W )|(^.* W )).*: .*$",
             "foreground": "#ffcc1f"
+        },
+        {
+            // 09-16 15:56:28.400 N TEST_LOG    (carplay-5529)                   : This is an ulogcat notice
+            // N TEST_LOG    : This is an ulogcat notice
+            "pattern": "((^N )|(^.* N )).*: .*$",
+            "foreground": "#aa44ff"
+        },
+        {
+            "pattern": "((^I )|(^.* I )).*: .*$",
+            "foreground": "#209920"
+        },
+        {
+            "pattern": "((^D )|(^.* D )).*: .*$",
+            "foreground": "#007acc"
         },
     ],
     "breadcrumbs.enabled": true,
@@ -99,4 +100,8 @@
     "git.inputValidationSubjectLength": null,
     "sync.removeExtensions": false,
     "sync.gist": "cb7a5a1442c87d9687a87a181c70b196",
+    "C_Cpp.suggestSnippets": false,
+    "scm.providerCountBadge": "auto",
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
 }

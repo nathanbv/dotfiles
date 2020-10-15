@@ -1,8 +1,8 @@
 # Platform dependant commands (TODO)
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-  # Nothing yet
+  local -r IS_LINUX=1
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-  # Nothing yet
+  local -r IS_MACOS=1
 else
   # Something else...
 fi
@@ -23,16 +23,17 @@ files() { xdg-open ./"$1" }
 # https://www.reddit.com/r/Fedora/comments/7dcc0o/fix_for_blank_gnome_control_center_settings_with/
 alias settings='env XDG_CURRENT_DESKTOP=GNOME gnome-control-center'
 
-# Enable interactive mode to always ask confirmation to overwrite (-i option)
-alias cp='cp --interactive'
-alias ln='ln --interactive'
-alias mv='mv --interactive'
-alias rm='rm --interactive=once'
+# Enable interactive mode to ask confirmation to overwrite
+alias cp='cp -i'
+alias ln='ln -i'
+alias mv='mv -i'
+# Do not prompt for every file on Linux
+[[ $IS_LINUX ]] && alias rm='rm --interactive=once' || alias rm='rm -i'
 
-# Use human readable values (-h option)
+# Use human readable values
 # Do not show snap partitions on Ubuntu
-alias df='df --human-readable --exclude-type="squashfs"'
-alias du='du --human-readable'
+[[ $IS_LINUX ]] && alias df='df -h --exclude-type="squashfs"' || alias df='df -h'
+alias du='du -h'
 
 dir() { mkdir "$1" && cd "$1" }
 

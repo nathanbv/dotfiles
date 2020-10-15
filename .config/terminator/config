@@ -1,18 +1,31 @@
 [global_config]
-  inactive_color_offset = 0.8
-  title_font = Sans Bold 7
+  enabled_plugins = CustomCommandsMenu, LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
+  title_font = Roboto Mono 7
   title_hide_sizetext = True
   title_inactive_bg_color = "#babdb6"
+  title_use_system_font = False
 [keybindings]
 [layouts]
   [[default]]
     [[[child1]]]
       parent = window0
+      profile = default
       type = Terminal
     [[[window0]]]
       parent = ""
       type = Window
 [plugins]
+  [[CustomCommandsMenu]]
+    [[[Android PM logs]]]
+      command = logcat -v color | grep -e PM_ -e AndroidRuntime -e [Mm][Qq][Tt][Tt] -e SecurityManager -e avc
+      enabled = True
+      name = Android PM logs
+      position = 0
+    [[[Enter chroot]]]
+      command = 'su root sh -c "PATH=${PATH}:/usr/bin:/usr/sbin:/bin chroot /vendor/pulsar"'
+      enabled = True
+      name = Enter chroot
+      position = 1
 [profiles]
   [[default]]
     allow_bold = False

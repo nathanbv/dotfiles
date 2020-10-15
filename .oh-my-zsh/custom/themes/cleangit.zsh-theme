@@ -61,6 +61,11 @@ function get_git_info() {
     command echo -n "${ZSH_THEME_GIT_PROMPT_SUFFIX}"
 }
 
+# Returns a color based on the success of the last command
+function get_last_cmd_status() {
+    local -r RET_VAL=$?
+    [[ $RET_VAL -eq 0 ]] && command echo -n "${ZSH_THEME_PROMPT_PREFIX}" || command echo -n "${ZSH_THEME_PROMPT_ERROR_PREFIX}"
+}
 
 #######################################
 # MAIN PROMPT (PS1)
@@ -80,21 +85,16 @@ ZSH_THEME_GIT_PROMPT_SUFFIX="%{$fg_bold[green]%}]"
 
 
 ZSH_THEME_PROMPT_PREFIX="%{$fg_bold[blue]%}"
+ZSH_THEME_PROMPT_ERROR_PREFIX="%{$fg_bold[red]%}"
 ZSH_THEME_PROMPT_SUFFIX="%{$reset_color%}"
 
 # Create the PS1 prompt
-PROMPT='${ZSH_THEME_PROMPT_PREFIX}%C$(get_git_info)${ZSH_THEME_PROMPT_SUFFIX} '
+PROMPT='$(get_last_cmd_status)%C$(get_git_info)${ZSH_THEME_PROMPT_SUFFIX} '
 
 
 #######################################
 # RIGHT PROMPT (PS1 right aligned)
 #######################################
-
-# Returns a flag if the last command returned a non-zero exit code
-function get_error() {
-    local -r RET_VAL=$?
-    [[ $RET_VAL -ne 0 ]] && command echo -n " ♻"
-}
 
 # Returns a flag if there is backgroung jobs running
 function get_bg_jobs() {
@@ -102,7 +102,7 @@ function get_bg_jobs() {
 }
 
 # Create the PS1 prompt on the right
-RPROMPT='%{$fg[grey]%}$(get_error)$(get_bg_jobs)${ZSH_THEME_PROMPT_SUFFIX}'
+RPROMPT='%{$fg[grey]%}$(get_bg_jobs)${ZSH_THEME_PROMPT_SUFFIX}'
 
 
 #######################################

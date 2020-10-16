@@ -12,16 +12,19 @@ function get_git_index() {
     ZSH_THEME_GIT_PROMPT_INDEX=$(command git status --porcelain 2> /dev/null)
 }
 
+# Returns a magenta flag if there is stashed changes
+function get_git_saved() {
+    if $(command git rev-parse --verify refs/stash &> /dev/null); then
+        command echo -n "%{$fg[magenta]%}●"
+    fi
+}
+
 # Returns a green flag if index and work tree matches (staged changes), or if
 # there is stashed changes
 function get_git_good() {
-    local READY
     if $(command echo "$ZSH_THEME_GIT_PROMPT_INDEX" | command grep -E '^[ACDMRT]. ' &> /dev/null); then
-        READY=1 # Staged
-    elif $(command git rev-parse --verify refs/stash &> /dev/null); then
-        READY=1 # Stashed
+        command echo -n "%{$fg[green]%}●"
     fi
-    [[ $READY ]] && command echo -n "%{$fg[green]%}●"
 }
 
 # Returns a yellow flag if work tree was changed (unstaged changes)
@@ -55,6 +58,7 @@ function get_git_info() {
 
     command echo -n "${ZSH_THEME_GIT_PROMPT_PREFIX}"
     get_git_branch
+    get_git_saved
     get_git_good
     get_git_bad
     get_git_ugly
@@ -73,12 +77,12 @@ function get_last_cmd_status() {
 
 ## You can choose between two flavours of prompt:
 
-##carplay|master●●● foo # In a git repo
+##carplay|master●●●● foo # In a git repo
 ##Downloads foo # Otherwise
 #ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg_bold[red]%}|"
 #ZSH_THEME_GIT_PROMPT_SUFFIX=""
 
-#carplay[master●●●] foo # In a git repo
+#carplay[master●●●●] foo # In a git repo
 #Downloads foo # Otherwise
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg_bold[green]%}["
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$fg_bold[green]%}]"

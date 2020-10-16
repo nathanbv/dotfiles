@@ -6,7 +6,7 @@ export ZSH=$HOME/.oh-my-zsh
 #ZSH_THEME="miloshadzic" #carplay_usb|master⚡ ⇒ foo
 #ZSH_THEME="garyblessington" #carplay_usb(master) ✗: foo
 #ZSH_THEME="zhann" #carplay_usb [master●●] foo
-ZSH_THEME="cleangit"
+ZSH_THEME="shortgit"
 
 ## fzf config
 # Set fzf installation directory path

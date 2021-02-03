@@ -17,21 +17,26 @@
 [plugins]
   [[CustomCommandsMenu]]
     [[[Android PM logs]]]
-      command = logcat -v color | grep -e PM_ -e AndroidRuntime -e [Mm][Qq][Tt][Tt] -e SecurityManager -e avc
+      command = logcat -v color | grep -e PM_ -e NBV -e AndroidRuntime -e SecurityManager
       enabled = True
       name = Android PM logs
       position = 0
+    [[[Pulsar logs]]]
+      command = ulogcat -C -v long
+      enabled = True
+      name = Pulsar logs
+      position = 1
     [[[Enter chroot]]]
       command = 'su root sh -c "PATH=${PATH}:/usr/bin:/usr/sbin:/bin chroot /vendor/pulsar"'
       enabled = True
       name = Enter chroot
-      position = 1
+      position = 2
 [profiles]
   [[default]]
     allow_bold = False
     cursor_color = "#aaaaaa"
     font = Roboto Mono 11
-    scrollback_lines = 10000
+    scrollback_lines = 20000
     show_titlebar = False
     use_system_font = False
     word_chars = "-,./?%&#:_-"

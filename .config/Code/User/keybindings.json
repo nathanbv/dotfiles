@@ -33,5 +33,25 @@
     {
         "key": "ctrl+alt+s",
         "command": "git.stageSelectedRanges"
+    },
+    {
+        "key": "shift+delete",
+        "command": "editor.action.deleteLines",
+        "when": "textInputFocus && !editorReadonly"
+    },
+    {
+        "key": "ctrl+shift+k",
+        "command": "-editor.action.deleteLines",
+        "when": "textInputFocus && !editorReadonly"
+    },
+    {
+        "key": "shift+delete",
+        "command": "-deleteFile",
+        "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceReadonly && !inputFocus"
+    },
+    {
+        "key": "ctrl+shift+delete",
+        "command": "deleteFile",
+        "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceReadonly && !inputFocus"
     }
 ]

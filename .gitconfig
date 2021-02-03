@@ -1,0 +1,22 @@
+[color]
+	ui = auto
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[diff]
+	tool = meld
+[difftool]
+	prompt = false
+	trustExitCode = true
+[difftool "meld"]
+	cmd = meld "$LOCAL" "$REMOTE"
+	trustExitCode = true
+[merge]
+	tool = meld
+[mergetool "meld"]
+	cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
+[core]
+	editor = vi
+	pager = less -F -X

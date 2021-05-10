@@ -68,7 +68,18 @@ alias gcb="git checkout -b "
 alias gcbd="git branch -D "
 alias gf="git fetch --all --tags --prune"
 alias gp="git pull --rebase"
-alias gls="git log --all --graph --oneline -\$((\$(tput lines)-2))"
+some_lines() {
+  # Allow some marging if there is line wrapping or due to empty lines with --graph
+  MARGIN="4"
+  MAX="20"
+  LINES="$(tput lines)"
+  if [ "${MAX}" -gt "${LINES}" ]; then
+    [[ "${LINES}" -gt "${MARGIN}" ]] && echo "$((${LINES}-${MARGIN}))" || echo "1"
+  else
+    echo "$((${MAX}-${MARGIN}))"
+  fi
+}
+alias gls="unbuffer git --no-pager log --all --graph --oneline | head -n \$(some_lines)"
 alias gll="git log --all --graph --pretty=format:'%C(yellow)%h%C(reset) -%C(auto)%d%C(reset) %s %C(green)(%cr) %C(bold blue)<%an>%C(reset)' --abbrev-commit"
 alias gca="git commit -v --amend"
 alias gc="git commit -v"

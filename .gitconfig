@@ -18,5 +18,9 @@
 [mergetool "meld"]
 	cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
 [core]
+	excludesfile = /home/nbleuzen/.gitignore_global
 	editor = vi
 	pager = less -F -X
+# Can be use in case of server migration:
+#[url "ssh://old.server.url"]
+#	insteadOf = ssh://new.server.url

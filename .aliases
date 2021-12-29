@@ -82,18 +82,22 @@ gft() {
   # The following line has been commented because it seemed to be causing problems in some git repo
   #&& git pull --unshallow || true
 }
-some_lines() {
-  # Allow some marging if there is line wrapping or due to empty lines with --graph
-  MARGIN="4"
-  MAX="20"
-  LINES="$(tput lines)"
-  if [ "${MAX}" -gt "${LINES}" ]; then
-    [[ "${LINES}" -gt "${MARGIN}" ]] && echo "$((${LINES}-${MARGIN}))" || echo "1"
-  else
-    echo "$((${MAX}-${MARGIN}))"
-  fi
-}
-alias gls="unbuffer git --no-pager log --all --graph --oneline | head -n \$(some_lines)"
+if [[ $IS_LINUX ]]; then
+  some_lines() {
+    # Allow some marging if there is line wrapping or due to empty lines with --graph
+    MARGIN="4"
+    MAX="20"
+    LINES="$(tput lines)"
+    if [ "${MAX}" -gt "${LINES}" ]; then
+      [[ "${LINES}" -gt "${MARGIN}" ]] && echo "$((${LINES}-${MARGIN}))" || echo "1"
+    else
+      echo "$((${MAX}-${MARGIN}))"
+    fi
+  }
+  alias gls="unbuffer git --no-pager log --all --graph --oneline | head -n \$(some_lines)"
+else
+  alias gls="git --no-pager log --all --graph --oneline -\$((\$(tput lines)-2))"
+fi
 alias gll="git log --all --graph --pretty=format:'%C(yellow)%h%C(reset) -%C(auto)%d%C(reset) %s %C(green)(%cr) %C(bold blue)<%an>%C(reset)' --abbrev-commit"
 alias gca="git commit -v --amend"
 alias gc="git commit -v"

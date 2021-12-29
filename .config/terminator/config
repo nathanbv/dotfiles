@@ -31,6 +31,11 @@
       enabled = True
       name = Enter chroot
       position = 2
+    [[[htop]]]
+      command = export LINES=45 && export COLUMNS=180 && htop
+      enabled = True
+      name = htop
+      position = 3
 [profiles]
   [[default]]
     allow_bold = False
@@ -39,4 +44,4 @@
     scrollback_lines = 20000
     show_titlebar = False
     use_system_font = False
-    word_chars = "-,./?%&#:_-"
+    word_chars = ",./?%&#:_-"

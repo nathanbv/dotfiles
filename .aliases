@@ -17,7 +17,7 @@ alias diff='colordiff'
 alias py='python'
 
 # Open folders and files in the using the default application
-files() { xdg-open ./"$1" }
+[[ $IS_LINUX ]] && files() { xdg-open ./"$1" } || files() { open -a Finder ./"$1" }
 
 # Fix to the control center in i3, see:
 # https://www.reddit.com/r/Fedora/comments/7dcc0o/fix_for_blank_gnome_control_center_settings_with/

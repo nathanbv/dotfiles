@@ -70,17 +70,23 @@ gcbr() { gcbd $1 && gcb $1 }
 alias gf="git fetch --all --tags --prune"
 alias gp="git pull --rebase"
 gft() {
-  branch="$1"
-  [ -z ${branch} ] && branch="master"
+  branch="${1}"
+  if [ -z ${branch} ]; then
+    if git ls-remote --exit-code --heads origin refs/heads/main &> /dev/null ; then
+      branch="main"
+    elif git ls-remote --exit-code --heads origin refs/heads/master &> /dev/null ; then
+      branch="master"
+    else
+      echo "Branch 'master' nor 'main' has been found on remote"
+      return 1
+    fi
+  fi
   git fetch --all --tags --prune && \
   git checkout $(git remote)/$branch && \
   git branch -D $branch || true && \
   git checkout -b $branch && \
   git branch --set-upstream-to=$(git remote)/$branch $branch && \
-  git fetch --all --tags --prune --prune-tags && \
-  git lfs pull
-  # The following line has been commented because it seemed to be causing problems in some git repo
-  #&& git pull --unshallow || true
+  git fetch --all --tags --prune --prune-tags
 }
 if [[ $IS_LINUX ]]; then
   some_lines() {

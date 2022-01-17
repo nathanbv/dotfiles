@@ -103,6 +103,11 @@ alias gca="git commit -v --amend"
 alias gc="git commit -v"
 alias gcp="git cherry-pick "
 
+alias pyenv-activate="source venv/bin/activate > /dev/null 2>&1 || { echo 'No python virtual env available' && return 1 }"
+alias activate="pyenv-activate"
+alias pyenv-deactivate="deactivate > /dev/null 2>&1"
+alias pyenv-create="pyenv-deactivate ; rm -rf venv > /dev/null 2>&1 ; python -m venv venv && pyenv-activate && pip install pip-tools && pip install 'pip<22' && echo -e '\nInstalling requirements' && pip-sync"
+
 # Add code command to MacOS
 [[ $IS_MACOS ]] && code() { open -a "Visual Studio Code" ./"$1" }
 

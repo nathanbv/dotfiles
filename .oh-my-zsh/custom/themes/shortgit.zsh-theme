@@ -105,8 +105,14 @@ function get_bg_jobs() {
     [[ $(jobs -l 2> /dev/null | command wc -l 2> /dev/null) -gt 0 ]] && command echo -n " ⚙"
 }
 
+# Returns the parent directory of the python virtual environment
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+function get_virtual_env() {
+    [[ -n "${VIRTUAL_ENV}" ]] && command basename ${VIRTUAL_ENV%/*}
+}
+
 # Create the PS1 prompt on the right
-RPROMPT='%{$fg[grey]%}$(get_bg_jobs)${ZSH_THEME_PROMPT_SUFFIX}'
+RPROMPT='%{$fg[grey]%}$(get_virtual_env)$(get_bg_jobs)${ZSH_THEME_PROMPT_SUFFIX}'
 
 
 #######################################

@@ -1,114 +1,66 @@
 {
-    "workbench.statusBar.feedback.visible": false,
     "workbench.activityBar.visible": true, // Explorer, Search, Git, Debug, Extension pane
     "workbench.sideBar.location": "right",
     "workbench.startupEditor": "newUntitledFile",
-    "editor.rulers": [80, 100, 120],
+    "workbench.enableExperiments": false,
     "workbench.colorCustomizations": {
-        "editorRuler.foreground": "#353d4994"
+        "editorRuler.foreground": "#353d4994",
     },
+    "editor.rulers": [80, 100, 120],
     "editor.renderWhitespace": "boundary",
-    "todohighlight.isEnable": true,
-    "todohighlight.isCaseSensitive": true,
-    "todohighlight.keywordsPattern": "@TODO|@FIXME|@DEBUG|@TEST",
-    "todohighlight.defaultStyle": {
-        "color": "#3f0096",
-        "backgroundColor": "#ff7715",
-        "overviewRulerColor": "#ff7715",
-        "cursor": "pointer",
-        "border": "1px solid #eee",
-        "borderRadius": "2px",
-        "isWholeLine": false,
-    },
-    "todohighlight.include": [
-        "**/*.c",
-        "**/*.cpp",
-        "**/*.h",
-        "**/*.hpp",
-        "**/*.mk",
-    ],
-    "todohighlight.maxFilesForSearch": 5120,
-    "todohighlight.toggleURI": false,
+    "editor.renderControlCharacters": false,
+    "editor.fontFamily": "'JetBrains Mono', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
+    "editor.fontLigatures": true,
     "search.showLineNumbers": true,
-    "java.errors.incompleteClasspath.severity": "ignore",
     "files.exclude": {
         "**/.classpath": true,
         "**/.project": true,
         "**/.settings": true,
-        "**/.factorypath": true
+        "**/.factorypath": true,
     },
     "files.associations": {
         "*.*log*": "log",
         "Dockerfile*": "dockerfile",
+        "Makefile*": "makefile",
     },
     "files.defaultLanguage": "log",
     "extensions.ignoreRecommendations": false,
-    "logFileHighlighter.customPatterns": [
-        // ulogcat and logcat
-        {
-            // 09-16 15:56:28.400 I TEST_LOG    (carplay-5529)                   : >>>NBV This is an ulogcat custom log
-            // I TEST_LOG    : >>>NBV This is an ulogcat custom log
-            "pattern": "^.*NBV.*$",
-            "foreground": "#aa44ff"
-        },
-        {
-            // 09-16 15:56:28.400 E TEST_LOG    (carplay-5529)                   : This is an ulogcat error
-            // E TEST_LOG    : This is an ulogcat error
-            "pattern": "((^[ECF] )|(^.* [ECF] )).*: .*$",
-            "foreground": "#df1f1f"
-        },
-        {
-            // 07-24 13:39:48.358  4559  4559 W PM_DisplayApplication: This is a logcat warning
-            // 09-16 15:56:28.400 W TEST_LOG    (carplay-5529)                   : This is an ulogcat warning
-            // W TEST_LOG    : This is an ulogcat warning
-            "pattern": "((^W )|(^.* W )).*: .*$",
-            "foreground": "#ffcc1f"
-        },
-        {
-            // 09-16 15:56:28.400 N TEST_LOG    (carplay-5529)                   : This is an ulogcat notice
-            // N TEST_LOG    : This is an ulogcat notice
-            "pattern": "((^N )|(^.* N )).*: .*$",
-            "foreground": "#aa44ff"
-        },
-        {
-            "pattern": "((^I )|(^.* I )).*: .*$",
-            "foreground": "#209920"
-        },
-        {
-            "pattern": "((^D )|(^.* D )).*: .*$",
-            "foreground": "#007acc"
-        },
-    ],
     "breadcrumbs.enabled": true,
-    "editor.renderControlCharacters": false,
     "C_Cpp.default.cppStandard": "c++11",
     "C_Cpp.default.cStandard": "c11",
-    "C_Cpp.default.intelliSenseMode": "gcc-x64",
+    "C_Cpp.default.intelliSenseMode": "linux-clang-x64",
+    "C_Cpp.suggestSnippets": false,
+    "C_Cpp.intelliSenseCacheSize": 10240,
+    "C_Cpp.workspaceParsingPriority": "high",
+    "C_Cpp.workspaceSymbols": "All",
     "gitlens.hovers.currentLine.over": "line",
     "gitlens.currentLine.scrollable": false,
-    "gitlens.codeLens.enabled": false,
-    "gitlens.statusBar.enabled": false,
     "gitlens.hovers.enabled": false,
-    "gitlens.views.repositories.location": "gitlens",
-    "gitlens.views.fileHistory.location": "gitlens",
-    "gitlens.views.lineHistory.location": "gitlens",
-    "gitlens.views.compare.location": "gitlens",
-    "gitlens.views.search.location": "gitlens",
+    "gitlens.statusBar.enabled": false,
+    "gitlens.codeLens.enabled": false,
+    "gitlens.defaultDateShortFormat": "DD-MM-YYYY",
+    "gitlens.defaultTimeFormat": "HH:mm",
+    "gitlens.defaultDateFormat": "DD-MM-YYYY HH:MM",
     "diffEditor.ignoreTrimWhitespace": false,
     "git.suggestSmartCommit": false,
     "git.autoRepositoryDetection": "openEditors",
+    "git.detectSubmodules": false,
     "git.inputValidationSubjectLength": null,
-    "sync.removeExtensions": false,
-    "sync.gist": "cb7a5a1442c87d9687a87a181c70b196",
-    "C_Cpp.suggestSnippets": false,
     "scm.providerCountBadge": "auto",
     "files.insertFinalNewline": true,
     "files.trimFinalNewlines": true,
     "debug.showInlineBreakpointCandidates": false,
-    "plantuml.render": "PlantUMLServer",
-    "plantuml.server": "https://www.plantuml.com/plantuml",
+    "plantuml.render": "Local",
     "security.workspace.trust.untrustedFiles": "open",
     "security.workspace.trust.enabled": false,
     "security.workspace.trust.banner": "never",
     "security.workspace.trust.startupPrompt": "never",
+    "terminal.integrated.defaultProfile.linux": "zsh",
+    "telemetry.telemetryLevel": "error",
+    "window.zoomLevel": 0,
+    "markdown.preview.doubleClickToSwitchToEditor": false,
+    "markdown.extension.orderedList.marker": "one",
+    "markdown.extension.toc.orderedList": true,
+    "markdown.extension.toc.updateOnSave": false,
+    "plantuml.server": "https://www.plantuml.com/plantuml",
 }

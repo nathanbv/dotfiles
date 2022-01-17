@@ -13,3 +13,6 @@ ln -fs $(pwd)/.i3 $HOME
 # VSCode settings and extensions can also be retrieved from extension Settings Sync
 ln -fs $(pwd)/.config/Code/User/keybindings.json $HOME/.config/Code/User/
 ln -fs $(pwd)/.config/Code/User/settings.json $HOME/.config/Code/User/
+
+sudo ln -fs $(pwd)/etc/profiled.d/java_home.sh /etc/profiled.d/
+sudo ln -fs $(pwd)/etc/profiled.d/no_middle_click_on_touchpad.sh /etc/profiled.d/

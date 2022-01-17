@@ -1,10 +1,19 @@
 [global_config]
-  enabled_plugins = CustomCommandsMenu, LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
-  title_font = Roboto Mono 7
   title_hide_sizetext = True
   title_inactive_bg_color = "#babdb6"
-  title_use_system_font = False
+  enabled_plugins = CustomCommandsMenu, Logger
 [keybindings]
+[profiles]
+  [[default]]
+    allow_bold = False
+    icon_bell = False
+    cursor_color = "#aaaaaa"
+    font = JetBrains Mono NL 11
+    show_titlebar = False
+    scrollback_lines = 20000
+    palette = "#2e3436:#cc0000:#4e9a06:#c4a000:#3f80d5:#75507b:#06989a:#d3d7cf:#555753:#ef2929:#8ae234:#fce94f:#729fcf:#ad7fa8:#34e2e2:#eeeeec"
+    word_chars = ",./?%&#_-"
+    use_system_font = False
 [layouts]
   [[default]]
     [[[child1]]]
@@ -16,32 +25,8 @@
       type = Window
 [plugins]
   [[CustomCommandsMenu]]
-    [[[Android PM logs]]]
-      command = logcat -v color | grep -e PM_ -e NBV -e AndroidRuntime -e SecurityManager
-      enabled = True
-      name = Android PM logs
-      position = 0
-    [[[Pulsar logs]]]
-      command = ulogcat -C -v long
-      enabled = True
-      name = Pulsar logs
-      position = 1
-    [[[Enter chroot]]]
-      command = 'su root sh -c "PATH=${PATH}:/usr/bin:/usr/sbin:/bin chroot /vendor/pulsar"'
-      enabled = True
-      name = Enter chroot
-      position = 2
     [[[htop]]]
-      command = export LINES=45 && export COLUMNS=180 && htop
       enabled = True
       name = htop
-      position = 3
-[profiles]
-  [[default]]
-    allow_bold = False
-    cursor_color = "#aaaaaa"
-    font = Roboto Mono 11
-    scrollback_lines = 20000
-    show_titlebar = False
-    use_system_font = False
-    word_chars = ",./?%&#:_-"
+      command = htop
+      position = 0

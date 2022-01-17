@@ -16,3 +16,6 @@ ln -fs $(pwd)/.config/Code/User/settings.json $HOME/.config/Code/User/
 
 sudo ln -fs $(pwd)/etc/profiled.d/java_home.sh /etc/profiled.d/
 sudo ln -fs $(pwd)/etc/profiled.d/no_middle_click_on_touchpad.sh /etc/profiled.d/
+
+sudo ln -fs $(pwd)/etc/udev/rules.d/90-wfh-setup.rules /etc/udev/rules.d/
+sudo ln -fs $(pwd)/etc/udev/wfh-setup.sh /etc/udev/

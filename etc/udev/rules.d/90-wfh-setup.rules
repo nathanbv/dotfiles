@@ -1,0 +1,19 @@
+# /etc/udev/rules.d/90-wfh-setup.rules
+#
+# This rule is currently detecting the Keychron K1 keyboard plugged into the USB
+# hub of the screen to monitor for a connection/disconnection from the Work From
+# Home setup.
+#
+# General debug notes related to udev:
+#  * Monitor events with `udevadm monitor --property`
+#  * Reload rules with `udevadm control --reload-rules`
+#  * Change log level threshold with `udevadm control --log-priority=debug`
+#  * Check logs with `journalctl -f | grep udev`
+#  * ENV{ID_VENDOR_ID} and ENV{ID_MODEL_ID} are respectively equivalent to
+#    ATTRS{idVendor} and ATTRS{idProduct}
+
+# Detect connection to the Work From Home setup
+ACTION=="add", SUBSYSTEM=="input", ENV{ID_VENDOR_ID}=="05ac", ENV{ID_MODEL_ID}=="024f", ENV{ID_USB_INTERFACE_NUM}=="00", RUN+="/bin/sh -c '/etc/udev/wfh-setup.sh add'"
+
+# Detect disconnection from the Work From Home setup
+ACTION=="remove", SUBSYSTEM=="input", ENV{ID_VENDOR_ID}=="05ac", ENV{ID_MODEL_ID}=="024f", ENV{ID_USB_INTERFACE_NUM}=="00", RUN+="/bin/sh -c '/etc/udev/wfh-setup.sh remove'"

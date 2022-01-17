@@ -46,3 +46,9 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 source $ZSH/oh-my-zsh.sh
 source $HOME/.aliases
+
+# Setup gpg-agent
+# https://github.com/drduh/YubiKey-Guide#replace-agents
+export GPG_TTY="$(tty)"
+export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+gpgconf --launch gpg-agent

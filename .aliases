@@ -164,3 +164,46 @@ adb-update()
   ./products/pulsar_base/scripts/sync.sh -s "$addr_pulsar" "$2" "$3" && \
   adb-disconnect
 }
+
+# Encrypt file with GPG key: `gpg-encrypt secretStuff.tar.gz john.doe`
+gpg-encrypt() {
+  FILENAME="${1}"
+  RECIPIENT="${2}"
+  if [[ -z "${FILENAME}" || -z "${RECIPIENT}" ]]; then
+    echo "File path \"${FILENAME}\" AND recipient \"${RECIPIENT}\" must be provided"
+    return 1
+  fi
+  OUTPUT="${FILENAME}.for-${RECIPIENT}.$(date +%Y-%m-%d_%H:%M).enc"
+  gpg --encrypt --armor --output "${OUTPUT}" --recipient "${RECIPIENT}" "${FILENAME}" && echo "${FILENAME} -> ${OUTPUT}" ;
+}
+
+# Decrypt file with GPG key: `gpg-decrypt secretStuff.tar.gz.2022-30-01_13:42.enc secretStuff.tar.gz`
+gpg-decrypt() {
+  FILENAME="${1}"
+  if [ -z "${FILENAME}" ]; then
+    echo "File path must be provided"
+    return 1
+  fi
+  [[ -z "${2}" ]] && OUTPUT="${FILENAME}.dec" || OUTPUT="${2}"
+  gpg --decrypt --armor --output "${OUTPUT}" "${FILENAME}" && echo "${FILENAME} -> ${OUTPUT}" ;
+}
+
+# connect-vpn orange up || connect-vpn pa2 down
+connect-vpn() {
+  help() {
+    echo "Incorrect use: connect-vpn orange up || connect-vpn pa2 down"
+  }
+  if [[ $# == "0" ]]; then
+    help
+    echo "A VPN connection name must be provided, one of:\n$(nmcli con | grep vpn | awk '{print $1}')"
+    return 1
+  elif [[ $# == "1" || ("${2}" != "up" && "${2}" != "down") ]]; then
+    help
+    echo "A status must be provided, one of: 'up' or 'down'"
+    return 1
+  fi
+
+  CONN="${1}"
+  STATUS="${2}"
+  nmcli con "${STATUS}" id "${CONN}" ;
+}

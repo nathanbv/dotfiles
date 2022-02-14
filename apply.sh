@@ -1,5 +1,6 @@
 ln -fs $(pwd)/.aliases $HOME
 ln -fs $(pwd)/.gitconfig $HOME
+ln -fs $(pwd)/.localrc $HOME
 ln -fs $(pwd)/.gitignore_global $HOME
 ln -fs $(pwd)/.zshrc $HOME
 rm -rf $HOME/.oh-my-zsh/custom/ ; ln -fs $(pwd)/.oh-my-zsh/custom/ $HOME/.oh-my-zsh/

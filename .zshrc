@@ -46,6 +46,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 source $ZSH/oh-my-zsh.sh
 source $HOME/.aliases
+[ -f $HOME/.fzf.zsh ] && source $HOME/.fzf.zsh
 
 # Setup gpg-agent
 # https://github.com/drduh/YubiKey-Guide#replace-agents

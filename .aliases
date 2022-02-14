@@ -1,9 +1,10 @@
 # Platform dependant commands (TODO)
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-  local -r IS_LINUX=1
+  IS_LINUX=1
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-  local -r IS_MACOS=1
+  IS_MACOS=1
 else
+  true
   # Something else...
 fi
 
@@ -17,7 +18,11 @@ alias diff='colordiff'
 alias py='python'
 
 # Open folders and files in the using the default application
-[[ $IS_LINUX ]] && files() { xdg-open ./"$1" } || files() { open -a Finder ./"$1" }
+if [[ $IS_LINUX ]]; then
+  files() { xdg-open ./"${1}"; }
+else
+  files() { open -a Finder ./"${1}"; }
+fi
 
 # Fix to the control center in i3, see:
 # https://www.reddit.com/r/Fedora/comments/7dcc0o/fix_for_blank_gnome_control_center_settings_with/
@@ -28,14 +33,24 @@ alias cp='cp -i'
 alias ln='ln -i'
 alias mv='mv -i'
 # Do not prompt for every file on Linux
-[[ $IS_LINUX ]] && alias rm='rm --interactive=once' || alias rm='rm -i'
+if [[ $IS_LINUX ]]; then
+  alias rm='rm --interactive=once'
+else
+  alias rm='rm -i'
+fi
 
 # Use human readable values
 # Do not show snap partitions on Ubuntu
-[[ $IS_LINUX ]] && alias df='df -h --exclude-type="squashfs"' || alias df='df -h'
+if [[ $IS_LINUX ]]; then
+  alias df='df -h --exclude-type="squashfs"'
+else
+  alias df='df -h'
+fi
 alias du='du -h'
 
-dir() { mkdir "$1" && cd "$1" }
+dir() { mkdir "${1}" && cd "${1}" || return 1; }
+alias tmpdir='cd $(mktemp -d)'
+alias tempdir='tmpdir'
 
 alias fp='ps aux | grep -v grep | grep -i '
 
@@ -45,7 +60,7 @@ alias apt='sudo apt'
 alias temp='watch -d -n 5 sensors'
 #alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 alias stripcolors='sed "s/\x1B\[\([0-9]\{1,2\}\(;[0-9]\{1,2\}\)\?\)\?[mGK]//g"'
-tust() { time unbuffer "$1" 2>&1 | stripcolors | tee "$2" }
+tust() { time unbuffer "${1}" 2>&1 | stripcolors | tee "${2}"; }
 
 alias -g H='| head'
 alias -g T='| tail'
@@ -59,19 +74,19 @@ alias -g NUL="> /dev/null 2>&1"
 ## Git aliases
 alias gda="git difftool --dir-diff --no-symlinks &" # diff btw local and HEAD
 alias gdas="git difftool --dir-diff --no-symlinks HEAD . &" # diff btw local, including stash and HEAD
-gdah() { git difftool --dir-diff --no-symlinks HEAD~"$1" HEAD & } # diff btw HEAD-n and HEAD
+gdah() { git difftool --dir-diff --no-symlinks HEAD~"${1}" HEAD & } # diff btw HEAD-n and HEAD
 alias gk="gitk --all"
 alias gst="git status -s"
 alias gstt="git status"
 alias gco="git checkout"
 alias gcb="git checkout -b "
 alias gcbd="git branch -D "
-gcbr() { gcbd $1 && gcb $1 }
+gcbr() { gcbd "${1}" && gcb "${1}"; }
 alias gf="git fetch --all --tags --prune"
 alias gp="git pull --rebase"
 gft() {
   branch="${1}"
-  if [ -z ${branch} ]; then
+  if [ -z "${branch}" ]; then
     if git ls-remote --exit-code --heads origin refs/heads/main &> /dev/null ; then
       branch="main"
     elif git ls-remote --exit-code --heads origin refs/heads/master &> /dev/null ; then
@@ -82,11 +97,11 @@ gft() {
     fi
   fi
   git fetch --all --tags --prune && \
-  git checkout $(git remote)/$branch && \
-  git branch -D $branch || true && \
-  git checkout -b $branch && \
-  git branch --set-upstream-to=$(git remote)/$branch $branch && \
-  git fetch --all --tags --prune --prune-tags
+  git checkout "$(git remote)/${branch}" && \
+  git branch -D "${branch}" || true && \
+  git checkout -b "${branch}" && \
+  git branch --set-upstream-to="$(git remote)/${branch}" "${branch}" && \
+  git fetch --all --tags --prune --prune-tags;
 }
 if [[ $IS_LINUX ]]; then
   some_lines() {
@@ -95,9 +110,9 @@ if [[ $IS_LINUX ]]; then
     MAX="20"
     LINES="$(tput lines)"
     if [ "${MAX}" -gt "${LINES}" ]; then
-      [[ "${LINES}" -gt "${MARGIN}" ]] && echo "$((${LINES}-${MARGIN}))" || echo "1"
+      [[ "${LINES}" -gt "${MARGIN}" ]] && echo "$((LINES-MARGIN))" || echo "1"
     else
-      echo "$((${MAX}-${MARGIN}))"
+      echo "$((MAX-MARGIN))"
     fi
   }
   alias gls="unbuffer git --no-pager log --all --graph --oneline | head -n \$(some_lines)"
@@ -115,66 +130,7 @@ alias pyenv-deactivate="deactivate > /dev/null 2>&1"
 alias pyenv-create="pyenv-deactivate ; rm -rf venv > /dev/null 2>&1 ; python -m venv venv && pyenv-activate && pip install pip-tools && pip install 'pip<22' && echo -e '\nInstalling requirements' && pip-sync"
 
 # Add code command to MacOS
-[[ $IS_MACOS ]] && code() { open -a "Visual Studio Code" ./"$1" }
-
-# To get ride of screen flickering see https://github.com/Microsoft/vscode/issues/41513
-code_no_gpu() { code ./$1 --disable-gpu }
-
-##Aliases from https://remysharp.com/2018/08/23/cli-improved
-#alias cat='bat' #Use colorize from oh-my-zsh instead
-
-## Quick access to drives and projects workspaces
-prm() { cd /home/nbleuzen/projects/"$1" }
-xld() { cd /mnt/ExtraLargeDrive/"$1" }
-xmd() { cd /mnt/ExtraMediumDrive/"$1" }
-
-## ADB functions
-#adb-connect 172.20.1.163
-adb-connect()
-{
-  export ip_adb="$1" && \
-  export addr_pulsar="${ip_adb}:9050" && \
-  export addr_android="${ip_adb}:5555" && \
-  alias pulsar_shell="adb -s $addr_pulsar shell" && \
-  alias android_shell="adb -s $addr_android shell" && \
-  adb connect "$addr_pulsar" && \
-  adb connect "$addr_android" && \
-  sleep 0.2 && \
-  adb -s "$addr_pulsar" shell date `date +%m%d%H%M%Y.%S`
-}
-
-#adb-disconnect
-adb-disconnect()
-{
-  adb disconnect "$addr_android" ; \
-  adb disconnect "$addr_pulsar" ; \
-  unset addr_android ; \
-  unset addr_pulsar ; \
-  unset ip_adb
-}
-
-#adb-init 172.20.1.163 nis8200
-adb-init()
-{
-    adb-update $1 $2 init
-}
-
-#adb-sync 172.20.1.163 nis8200
-adb-sync()
-{
-  adb-update $1 $2 sync
-}
-
-#adb-update 172.20.1.163 nis8200 sync/init
-adb-update()
-{
-  adb-disconnect ; \
-  adb-connect "$1" && \
-  adb -s "$addr_android" root && \
-  adb -s "$addr_android" shell mount -o rw,remount /vendor/pulsar && \
-  ./products/pulsar_base/scripts/sync.sh -s "$addr_pulsar" "$2" "$3" && \
-  adb-disconnect
-}
+[[ $IS_MACOS ]] && code() { open -a "Visual Studio Code" ./"${1}" ; }
 
 # Encrypt file with GPG key: `gpg-encrypt secretStuff.tar.gz john.doe`
 gpg-encrypt() {
@@ -206,7 +162,7 @@ connect-vpn() {
   }
   if [[ $# == "0" ]]; then
     help
-    echo "A VPN connection name must be provided, one of:\n$(nmcli con | grep vpn | awk '{print $1}')"
+    echo -e "A VPN connection name must be provided, one of:\n$(nmcli con | grep vpn | awk '{print $1}')"
     return 1
   elif [[ $# == "1" || ("${2}" != "up" && "${2}" != "down") ]]; then
     help

@@ -20,3 +20,16 @@ sudo ln -fs $(pwd)/etc/profiled.d/no_middle_click_on_touchpad.sh /etc/profiled.d
 
 sudo ln -fs $(pwd)/etc/udev/rules.d/90-wfh-setup.rules /etc/udev/rules.d/
 sudo ln -fs $(pwd)/etc/udev/wfh-setup.sh /etc/udev/
+
+# You'll need to download and install the following font for terminator:
+# https://www.jetbrains.com/lp/mono/
+# sudo apt install command-not-found
+
+# Install zfz
+# git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install
+
+# To make the terminator's CustomCommandsMenu plugin working you might need to do the following change:
+# https://bugs.launchpad.net/terminator/+bug/1781706/comments/6
+
+# To get the `sensors` command used by the `temp` alias
+# sudo apt install lm-sensors

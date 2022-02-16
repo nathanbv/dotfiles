@@ -28,7 +28,6 @@
     "breadcrumbs.enabled": true,
     "C_Cpp.default.cppStandard": "c++11",
     "C_Cpp.default.cStandard": "c11",
-    "C_Cpp.default.intelliSenseMode": "linux-clang-x64",
     "C_Cpp.suggestSnippets": false,
     "C_Cpp.intelliSenseCacheSize": 10240,
     "C_Cpp.workspaceParsingPriority": "high",
@@ -63,4 +62,30 @@
     "markdown.extension.toc.orderedList": true,
     "markdown.extension.toc.updateOnSave": false,
     "plantuml.server": "https://www.plantuml.com/plantuml",
+    "logFileHighlighter.customPatterns": [
+        {
+            "pattern": "^.*NBV.*$",
+            "foreground": "#aa44ff"
+        },
+        {
+            "pattern": "^.* (ERROR|FATAL) .*$",
+            "foreground": "#df1f1f"
+        },
+        {
+            "pattern": "^.* WARN .*$",
+            "foreground": "#ffcc1f"
+        },
+        {
+            "pattern": "^.* INFO .*$",
+            "foreground": "#209920"
+        },
+        {
+            "pattern": "^.* DEBUG .*$",
+            "foreground": "#007acc"
+        },
+        {
+            "pattern": "^.* TRACE .*$",
+            "foreground": "#f9b9ff"
+        },
+    ],
 }

@@ -1,7 +1,7 @@
 {
   "4082:EDE35F16": {
     "_name": "Wireless Mouse MX Master 3",
-    "dpi": "1500",
+    "dpi": 1500,
     "hires-smooth-invert": false,
     "hires-smooth-resolution": true,
     "smart-shift": 12

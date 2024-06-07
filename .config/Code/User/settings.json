@@ -71,7 +71,6 @@
         },
     ],
     "markdown.extension.orderedList.marker": "one",
-    "markdown.extension.toc.orderedList": true,
     "markdown.extension.toc.updateOnSave": false,
     "markdown.preview.doubleClickToSwitchToEditor": false,
     "plantuml.render": "PlantUMLServer",
@@ -166,6 +165,64 @@
         },
         "c:S107": {
             "level": "off"
+        },
+        "c:S5276": {
+            "level": "off"
+        },
+        "c:S859": {
+            "level": "off"
+        },
+        "c:S1066": {
+            "level": "off"
         }
     },
+    "redhat.telemetry.enabled": true,
+    "java.jdt.ls.protobufSupport.enabled": false,
+    "java.compile.nullAnalysis.mode": "disabled",
+    "git.openRepositoryInParentFolders": "never",
+    "cSpell.userWords": [
+        "ackd",
+        "acked",
+        "acking",
+        "apdu",
+        "bindgen",
+        "bolosctl",
+        "bolosrs",
+        "DESYNC",
+        "desynchronization",
+        "desynchronized",
+        "diversifier",
+        "elfs",
+        "idempotency",
+        "implem",
+        "logentry",
+        "Merkle",
+        "Misformatted",
+        "PCLE",
+        "perso",
+        "privkey",
+        "prost",
+        "proto",
+        "protobuf",
+        "pubkey",
+        "safenet",
+        "secp",
+        "Simu",
+        "smfs",
+        "Uncipher",
+        "UTST"
+    ],
+    "sonarlint.trace.server": "off",
+    "rust-analyzer.cargo.extraEnv": {
+        "PROJECT_BUILD_DIR": "${workspaceFolder}/_build/dev-simu"
+    },
+    "rust-analyzer.cargo.features": [
+        "pki",
+        "program",
+    ],
+    "[rust]": {
+        "editor.defaultFormatter": "rust-lang.rust-analyzer",
+        "editor.formatOnSave": true
+    },
+    "diffEditor.maxComputationTime": 0,
 }

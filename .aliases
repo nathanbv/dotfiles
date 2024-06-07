@@ -88,7 +88,7 @@ gcbr() { gcbd "${1}" && gcb "${1}"; }
 alias gf="git fetch --all --tags --prune"
 alias gp="git pull --rebase"
 gft() {
-  branch="${1}"
+  branch="${1#"origin/"}"
   if [ -z "${branch}" ]; then
     if git ls-remote --exit-code --heads origin refs/heads/main &> /dev/null ; then
       branch="main"

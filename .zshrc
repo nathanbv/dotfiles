@@ -1,5 +1,5 @@
 # Export path
-PATH=$PATH:$HOME/bin:$HOME/.bin
+PATH=$PATH:$HOME/bin:$HOME/.bin:$HOME/.local/bin
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
@@ -18,6 +18,21 @@ export FZF_BASE=$HOME/.fzf
 ## colorize config
 ZSH_COLORIZE_TOOL=pygmentize
 ZSH_COLORIZE_STYLE="monokai"
+
+# From Shell History Is Your Best Productivity Tool: https://martinheinz.dev/blog/110
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=10000000
+SAVEHIST=10000000
+HISTORY_IGNORE="(cd|ls|gk|gls|gst)*"
+setopt INC_APPEND_HISTORY    # Write to the history file immediately, not when the shell exits.
+setopt SHARE_HISTORY         # Share history between all sessions.
+setopt HIST_IGNORE_DUPS      # Do not record an event that was just recorded again.
+setopt HIST_IGNORE_ALL_DUPS  # Delete an old recorded event if a new event is a duplicate.
+setopt HIST_IGNORE_SPACE     # Do not record an event starting with a space.
+setopt HIST_SAVE_NO_DUPS     # Do not write a duplicate event to the history file.
+setopt HIST_VERIFY           # Do not execute immediately upon history expansion.
+setopt APPEND_HISTORY        # append to history file (Default)
+setopt HIST_NO_STORE         # Don't store history commands
 
 ## bgnotify config
 # Commands taking at leas this amount of seconds to execute will

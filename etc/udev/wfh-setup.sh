@@ -5,13 +5,20 @@ MY_USER="nbleuzen"
 MY_USER_ID=$(id -u ${MY_USER})
 LOG_PREFIX=$(date)
 
+LOG_FILE="/tmp/udev.log"
+if [ ! -f ${LOG_FILE} ]; then
+    touch "${LOG_FILE}"
+    chmod 666 "${LOG_FILE}"
+fi
+
 function log() {
-    echo "${LOG_PREFIX}" "$@" >> /tmp/udev.log
+    echo "${LOG_PREFIX}" "$@" >> "${LOG_FILE}"
 }
 
 function execute_as_user() {
-    log "Executing: sudo -u ${MY_USER} DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/${MY_USER_ID}/bus $@"
-    sudo -u ${MY_USER} DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/${MY_USER_ID}/bus $@
+    log "Executing $(id -u): sudo -u ${MY_USER} DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/${MY_USER_ID}/bus $@"
+    # sudo -u ${MY_USER} DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/${MY_USER_ID}/bus $@
+    xhost + && sudo -u ${MY_USER} $@ && xhost -
 }
 
 function execute() {
@@ -48,17 +55,18 @@ ACTION="${1}"
 EXEC_USER=${SUDO_USER:-$USER}
 
 # Debug logs
-log "${ACTION} from '${EXEC_USER}'"
-log "ALL screens:"
-execute xrandr >> /tmp/udev.log
+log "${ACTION} from '${EXEC_USER}($(id -u))'"
+# log "ALL screens:"
+# execute xrandr >> /tmp/udev.log
 log "DP screens:"
-execute xrandr | grep -E "^DP-." >> /tmp/udev.log
+execute xrandr | grep -E "connected( primary)? 3840x2160" >> /tmp/udev.log
+xrandr | grep -E "connected( primary)? 3840x2160" >> /tmp/udev.log
 
 if [ "${ACTION}" == "add" ]; then
     # If a 4k display is connected on DisplayPort, configure the WFH setup
     # Could grep on "^DP-. connected.* 3840x2160" to make sure we're dealing
     # with a 4K display but at this time the resolution is not yet set in xrandr
-    execute xrandr | grep -qE "^DP-. connected" && display_connection || log "No display connected"
+    xrandr | grep -E "connected( primary)? 3840x2160" && display_connection || log "No display connected"
     # Configure keyboard to use function keys (FXX) by default instead of media ones
     KBOARD_CONF="/sys/module/hid_apple/parameters/fnmode"
     if [ -f "${KBOARD_CONF}" ]; then
@@ -69,7 +77,8 @@ if [ "${ACTION}" == "add" ]; then
     fi
 elif [ "${ACTION}" == "remove" ]; then
     # If no 4k display is connected on DisplayPort, reset the WFH setup
-    execute xrandr | grep -qE "^DP-. connected" && log "Display still connected" || display_disconnection
+    xrandr | grep -qE "connected( primary)? 3840x2160" && log "Display still connected" || display_disconnection
+    display_disconnection
 else
     log "Un-supported udev action ${ACTION}"
 fi
